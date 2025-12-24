@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -17,10 +18,6 @@ public class LinksTest extends BaseTest {
 
     @BeforeMethod
     public void pageSetUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -29,22 +26,28 @@ public class LinksTest extends BaseTest {
         scrollToElement(homePage.cardsList.getLast());
         homePage.clickOnCard("Elements");
         sideBarPage.clickOnSideBarElement("Links");
+        sideBarPage.scrollDown();
     }
+    String statusCode = "404";
+    String statusText = "Not Found";
+
+
 
     @Test
     public void userCanOpenValidLinkInNewTab(){
         elementsPage.clickOnHomeLink();
-        elementsPage.assertThatCorrectLinkIsOpenInNewTab();
-        elementsPage.assertThatTitleTabIsCorrect();
+        elementsPage.getTab(1);
+        Assert.assertEquals(driver.getCurrentUrl(),"https://demoqa.com/");
+        elementsPage.getTab(1);
+        Assert.assertTrue(driver.getTitle().contains("DEMOQA"));
     }
 
     @Test
     public void userCanRecieveApiCallForNotFoundLink(){
-        sideBarPage.scrollDown();
         elementsPage.clickOnNotFoundLink();
         wait.until(ExpectedConditions.visibilityOf(elementsPage.responseMessage));
-        elementsPage.assertThatInfoMessageIsDisplayed();
-        elementsPage.assertThatInfoMessageContainsStatusCode("404");
-        elementsPage.assertThatInfoMessageContainsStatusText("Not Found");
+        Assert.assertTrue(elementsPage.responseMessage.isDisplayed());
+        Assert.assertTrue(elementsPage.responseMessage.getText().contains(statusCode));
+        Assert.assertTrue(elementsPage.responseMessage.getText().contains(statusText));
     }
 }

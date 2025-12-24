@@ -18,10 +18,6 @@ public class ModalDialogsTest extends BaseTest {
 
     @BeforeMethod
     public void pageSetUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -51,7 +47,7 @@ public class ModalDialogsTest extends BaseTest {
         wait.until(ExpectedConditions.elementToBeClickable(alertsFrameAndWindowsPage.smallModalCloseButton));
         alertsFrameAndWindowsPage.clickOnSmallModalCloseButton();
         wait.until(ExpectedConditions.invisibilityOf(alertsFrameAndWindowsPage.smallModalCloseButton));
-        alertsFrameAndWindowsPage.assertSmallModalDialogClose();
+        alertsFrameAndWindowsPage.assertSmallModalDialogClose();    //sa try/catch proveravam da li je close button vidljiv
     }
 
     @Test
@@ -69,7 +65,7 @@ public class ModalDialogsTest extends BaseTest {
         wait.until(ExpectedConditions.elementToBeClickable(alertsFrameAndWindowsPage.largeModalCloseButton));
         alertsFrameAndWindowsPage.clickOnLargeModalCloseButton();
         wait.until(ExpectedConditions.invisibilityOf(alertsFrameAndWindowsPage.largeModalCloseButton));
-        alertsFrameAndWindowsPage.assertLargeModalDialogsClose();
+        alertsFrameAndWindowsPage.assertLargeModalDialogsClose();   //sa try/catch proveravam da li je close button vidljiv
     }
 
 

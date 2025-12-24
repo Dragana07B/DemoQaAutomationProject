@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -18,10 +20,6 @@ public class CheckBoxTest extends BaseTest {
 
     @BeforeMethod
     public void pageSetUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -30,55 +28,53 @@ public class CheckBoxTest extends BaseTest {
         scrollToElement(homePage.cardsList.getLast());
         homePage.clickOnCard("Elements");
         sideBarPage.clickOnSideBarElement("Check Box");
+
+        elementsPage.assertThatNoteSelectionIsNotDisplayed();   // uradjeno sa try/catch
+        sideBarPage.scrollDown();
     }
 
     @Test
     public void UserCanCheckWholeCheckBoxListWhileCollapsed(){
-        sideBarPage.scrollDown();
-        elementsPage.assertThatNoteSelectionIsNotDisplayed();
+
         elementsPage.clickOnHomeCheckBox();
         elementsPage.clickOnExpandAllButton();
         wait.until(ExpectedConditions.visibilityOf(elementsPage.toggleButtonsList.getLast()));
-        elementsPage.assertThatNoteSelectionAppears();
-        elementsPage.assertThatEverythingIsSelected();
+        Assert.assertTrue(elementsPage.selectionNote.isDisplayed());
+        elementsPage.assertThatEverythingIsSelected();      //  asertaciju sam uradila u metodi jer je dugacka lista selekcije
     }
     @Test
     public void UserCanUncheckWholeCheckBoxListWhileCollapsed(){
-        sideBarPage.scrollDown();
-        elementsPage.assertThatNoteSelectionIsNotDisplayed();
         elementsPage.clickOnHomeCheckBox();
         elementsPage.clickOnExpandAllButton();
         wait.until(ExpectedConditions.visibilityOf(elementsPage.toggleButtonsList.getLast()));
-        elementsPage.assertThatNoteSelectionAppears();
+        Assert.assertTrue(elementsPage.selectionNote.isDisplayed());
         elementsPage.assertThatEverythingIsSelected();
         elementsPage.clickOnCollapseAllButton();
         elementsPage.clickOnHomeCheckBox();
-        elementsPage.assertThatNoteSelectionIsNotDisplayed();
+        elementsPage.assertThatNoteSelectionIsNotDisplayed();   // uradjeno sa try/catch
     }
     @Test
     public void UserCanSelectAllCheckBoxesByExpandingListUsingToggleButtons(){
-        elementsPage.assertThatNoteSelectionIsNotDisplayed();
         elementsPage.clickOnToggleButtonHome();
-        sideBarPage.scrollDown();
         elementsPage.clickOnToggleButtons();
         wait.until(ExpectedConditions.visibilityOf(elementsPage.toggleButtonsList.getLast()));
         elementsPage.clickOnHomeCheckBox();
-        elementsPage.assertThatNoteSelectionAppears();
+        Assert.assertTrue(elementsPage.selectionNote.isDisplayed());
         elementsPage.assertThatEverythingIsSelected();
     }
     @Test
     public void UserCanUncheckAllCheckBoxesByExpandingListUsingToggleButtons(){
-        elementsPage.assertThatNoteSelectionIsNotDisplayed();
         elementsPage.clickOnToggleButtonHome();
-        sideBarPage.scrollDown();
         elementsPage.clickOnToggleButtons();
         wait.until(ExpectedConditions.visibilityOf(elementsPage.toggleButtonsList.getLast()));
         elementsPage.clickOnHomeCheckBox();
-        elementsPage.assertThatNoteSelectionAppears();
+        Assert.assertTrue(elementsPage.selectionNote.isDisplayed());
         elementsPage.assertThatEverythingIsSelected();
         elementsPage.clickOnHomeCheckBox();
-        elementsPage.assertThatNoteSelectionIsNotDisplayed();
+        elementsPage.assertThatNoteSelectionIsNotDisplayed();   // uradjeno sa try/catch
     }
+
+
 
 
 

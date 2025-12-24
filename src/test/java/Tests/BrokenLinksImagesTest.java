@@ -17,10 +17,6 @@ public class BrokenLinksImagesTest extends BaseTest {
 
     @BeforeMethod
     public void pageSetUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -35,14 +31,23 @@ public class BrokenLinksImagesTest extends BaseTest {
     @Test
     public void userCanSeeDisplayedValidImage(){
         Assert.assertTrue(elementsPage.validImage.isDisplayed());
-        elementsPage.verifyThatValidImageSrcExistAndItIsValid();
-        elementsPage.verifyThatValidImageIsVisibleOnPage();
+        Assert.assertNotNull(elementsPage.validImage.getAttribute("src"));
+        Assert.assertFalse(elementsPage.validImage.getAttribute("src").isEmpty());
+        Assert.assertTrue(elementsPage.validImage.getAttribute("src").contains("Toolsqa"));
+        Assert.assertNotEquals(elementsPage.validImage.getAttribute("naturalWidth"), "0");
+        Assert.assertNotEquals(elementsPage.validImage.getAttribute("naturalHeight"),"0");
+        // u ovim asertacijama koristim atribute da bih proverila da li se slika stvarno vidi na stranici
+        // naturalWidth i naturalHeight su JavaScript property i ako su vece od nule, to znaci da je slika
+        // ucitana. U suprotnom, src moze da postoji, ali da slika nije ucitana -> broken image(sledeci test)
     }
     @Test
     public void userCanNotSeeBrokenImage(){
         Assert.assertTrue(elementsPage.brokenImage.isDisplayed());
-        elementsPage.verifyThatBrokenImageSrcExistAndItIsValid();
-        elementsPage.verifyThatBrokenImageIsNotVisibleOnPage();
+        Assert.assertNotNull(elementsPage.brokenImage.getAttribute("src"));
+        Assert.assertFalse(elementsPage.brokenImage.getAttribute("src").isEmpty());
+        Assert.assertTrue(elementsPage.brokenImage.getAttribute("src").contains("Toolsqa"));
+        Assert.assertEquals(elementsPage.brokenImage.getAttribute("naturalWidth"), "0");
+        Assert.assertEquals(elementsPage.brokenImage.getAttribute("naturalHeight"),"0");
     }
 
     @Test
@@ -61,7 +66,7 @@ public class BrokenLinksImagesTest extends BaseTest {
         elementsPage.clickOnBrokenLink();
         wait.until(ExpectedConditions.urlToBe("https://the-internet.herokuapp.com/status_codes/500"));
         Assert.assertEquals(driver.getCurrentUrl(),"https://the-internet.herokuapp.com/status_codes/500");
-        elementsPage.assert500CodeStatus();
+        Assert.assertTrue(elementsPage.statusCode.getText().contains("500 status code"));
 
 
     }

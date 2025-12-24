@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class ElementsPage extends BaseTest {
     @FindBy(linkText = "Click Here for Broken Link")
     public WebElement brokenLink;
     @FindBy(id = "content")
-    WebElement statusCode;
+    public WebElement statusCode;
 
     //  Buttons
     @FindBy(id = "doubleClickBtn")
@@ -54,7 +55,7 @@ public class ElementsPage extends BaseTest {
     @FindBy(className = "rct-title")
     List<WebElement> checkBoxList;
     @FindBy(id = "result")
-    WebElement selectionNote;
+    public WebElement selectionNote;
     @FindBy(css = "button[aria-label='Toggle']")
     public List<WebElement> toggleButtonsList;
 
@@ -74,12 +75,13 @@ public class ElementsPage extends BaseTest {
     @FindBy(id = "linkResponse")
     public WebElement responseMessage;
 
+    //  RadioButtons
     @FindBy(xpath = "//*[@id=\"app\"]/div/div/div/div[2]/div[2]/div[2]/label")
-    WebElement yesRadioButton;
+    public WebElement yesRadioButton;
     @FindBy(className = "text-success")
-    WebElement selectionText;
+    public WebElement selectionText;
     @FindBy(xpath = "//*[@id=\"app\"]/div/div/div/div[2]/div[2]/div[3]/label")
-    WebElement impressiveRadioButton;
+    public WebElement impressiveRadioButton;
     @FindBy(xpath = "/html/body/div[2]/div/div/div/div[2]/div[2]/div[4]/input")
     public WebElement noRadioButton;
 
@@ -104,36 +106,7 @@ public class ElementsPage extends BaseTest {
 
 
     //  Broken Images
-    public void verifyThatValidImageSrcExistAndItIsValid(){
-        String imageSrc = validImage.getAttribute("src");
-        System.out.println(imageSrc);
-        Assert.assertNotNull(imageSrc);
-        Assert.assertFalse(imageSrc.isEmpty());
-        Assert.assertTrue(imageSrc.contains("Toolsqa"));
-    }
-    public void verifyThatValidImageIsVisibleOnPage(){
-        String width = validImage.getAttribute("naturalWidth");
-        String height = validImage.getAttribute("naturalHeight");
-        System.out.println(width);
-        System.out.println(height);
-        Assert.assertNotEquals(width, "0");
-        Assert.assertNotEquals(height,"0");
-    }
-    public void verifyThatBrokenImageSrcExistAndItIsValid(){
-        String imageSrc = brokenImage.getAttribute("src");
-        System.out.println(imageSrc);
-        Assert.assertNotNull(imageSrc);
-        Assert.assertFalse(imageSrc.isEmpty());
-        Assert.assertTrue(imageSrc.contains("Toolsqa"));
-    }
-    public void verifyThatBrokenImageIsNotVisibleOnPage(){
-        String width = brokenImage.getAttribute("naturalWidth");
-        String height = brokenImage.getAttribute("naturalHeight");
-        System.out.println(width);
-        System.out.println(height);
-        Assert.assertEquals(width, "0");
-        Assert.assertEquals(height,"0");
-    }
+
 
     //  Broken Links
     public void clickOnValidLink(){
@@ -142,9 +115,7 @@ public class ElementsPage extends BaseTest {
     public void clickOnBrokenLink(){
         brokenLink.click();
     }
-    public void assert500CodeStatus(){
-        Assert.assertTrue(statusCode.getText().contains("500 status code"));
-    }
+
 
     //  Butons
     public void clickTwiceOnDoubleClickMeButton(){
@@ -169,14 +140,6 @@ public class ElementsPage extends BaseTest {
     }
     public void clickOnHomeCheckBox(){
         checkBoxList.get(0).click();
-    }
-    public void clickOnCheckBoxItems(){
-        for(int i =checkBoxList.size()-1;i>=0; i--){
-            checkBoxList.get(i).click();
-        }
-    }
-    public void assertThatNoteSelectionAppears(){
-        Assert.assertTrue(selectionNote.isDisplayed());
     }
 
     public void assertThatEverythingIsSelected(){
@@ -218,12 +181,7 @@ public class ElementsPage extends BaseTest {
     }
 
     //  Dynamic Properties
-    public void assertWillEnable5SecondsButtonIsDisplayed(){
-        Assert.assertTrue(willEneble5SecondsButton.isDisplayed());
-    }
-    public void assertThatButtonIsNotClickable(){
-        Assert.assertFalse(willEneble5SecondsButton.isEnabled());
-    }
+
     public void clickOnWillEnable5SecondsButton(){
         willEneble5SecondsButton.click();
     }
@@ -239,12 +197,9 @@ public class ElementsPage extends BaseTest {
         Assert.assertNotEquals(baseColor,newColor);
     }
 
-
-    public void assertThatVisibleAfter5SecondsIsDisplayed(){
-        Assert.assertTrue(visibleAfter5SecondsButton.isDisplayed(), "Button is visible");
-    }
     public void assertThatVisibleAfter5SecondsIsNotDisplayed(){
         boolean isPresent = false;
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
         try{
             isPresent = visibleAfter5SecondsButton.isDisplayed();
         } catch(Exception e){
@@ -267,52 +222,18 @@ public class ElementsPage extends BaseTest {
         ArrayList<String> listaTabova = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(listaTabova.get(number));
     }
-    public void assertThatCorrectLinkIsOpenInNewTab(){
-        getTab(1);
-        String expectedUrl = "https://demoqa.com/";
-        Assert.assertEquals(driver.getCurrentUrl(),expectedUrl);
-    }
-    public void assertThatTitleTabIsCorrect(){
-        getTab(1);
-        Assert.assertTrue(driver.getTitle().contains("DEMOQA"));
-    }
-
     public void clickOnNotFoundLink(){
         notFoundLink.click();
     }
-    public void assertThatInfoMessageIsDisplayed(){
-        Assert.assertTrue(responseMessage.isDisplayed());
-    }
-    public void assertThatInfoMessageContainsStatusCode(String statusCode){
-        Assert.assertTrue(responseMessage.getText().contains(statusCode));
-    }
-    public void assertThatInfoMessageContainsStatusText(String statusText) {
-        Assert.assertTrue(responseMessage.getText().contains(statusText));
-    }
 
     //  Radio Button
-    public void assertThatYesRadioButtonIsEnabled(){
-        Assert.assertTrue(yesRadioButton.isEnabled());
-    }
+
     public void clickOnYesRadioButton(){
         yesRadioButton.click();
     }
-    public void assertThatYesButtonIsSelected(){
-        Assert.assertTrue(selectionText.getText().contains("Yes"));
-        Assert.assertTrue(yesRadioButton.isEnabled());
-    }
-    public void assertThatImpressiveRadioButtonIsEnabled(){
-        Assert.assertTrue(impressiveRadioButton.isEnabled());
-    }
+
     public void clickOnImpressiveRadioButton(){
         impressiveRadioButton.click();
-    }
-    public void assertThatImpressiveButtonIsSelected(){
-        Assert.assertTrue(selectionText.getText().contains("Impressive"));
-    }
-    public void verifyThatCursorIsNotAllowedOverNoButton(){
-        String cursor = noRadioButton.getCssValue("cursor");
-        Assert.assertEquals(cursor, "not-allowed");
     }
 
     //  Text Box
@@ -340,8 +261,8 @@ public class ElementsPage extends BaseTest {
         basicColor = eMailField.getCssValue("border-color");
     }
     public void assertThatEmailFieldBorderColorIsRed(){
-        String borderError = eMailField.getCssValue("border-color");
-        Assert.assertNotEquals(basicColor, borderError);
+        Assert.assertNotEquals(basicColor, eMailField.getCssValue("border-color"));
+        //CssValue je Css property i definise kako ce nesto izgledati u browseru
     }
 
 

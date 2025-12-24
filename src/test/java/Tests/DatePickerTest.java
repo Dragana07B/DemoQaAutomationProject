@@ -15,9 +15,6 @@ public class DatePickerTest extends BaseTest {
 
     @BeforeMethod
     public void pageSetUp(){
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -39,9 +36,8 @@ public class DatePickerTest extends BaseTest {
         Assert.assertTrue((widgetsPage.yearDropDown.getText().contains("1989")));
         widgetsPage.selectDate("1");
         Assert.assertTrue(widgetsPage.selectDateField.getAttribute("value").contains("05/01/1989"));
-
-
-
-
+            //na kraju proveravam da li sacuvana vrednost u value odgovara onoj koju sam ja unela
+            //value predstavlja moju unetu vrednost i to je atribut input-a i zato ga hvatam sa getAttribut
+            // podsetnik: sa getText hvatam text izmedju dva taga
     }
 }

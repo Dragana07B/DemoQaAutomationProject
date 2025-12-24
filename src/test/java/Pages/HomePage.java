@@ -30,6 +30,9 @@ public class HomePage extends BaseTest {
             }
         }
     }
+    // ovom metodom ne ponavljam pisanje istog koda u svim klasama
+    // potrebna je da bi se sa home page klikom na neku od kartica iz liste
+    // otislo na neku od stranica koje su napravljene pojedinacno u klasama
 
 
 

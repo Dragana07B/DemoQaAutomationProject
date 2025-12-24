@@ -19,10 +19,6 @@ public class BrowserWindowsTest extends BaseTest {
 
     @BeforeMethod
     public void pageSetUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -31,29 +27,29 @@ public class BrowserWindowsTest extends BaseTest {
         scrollToElement(homePage.cardsList.getLast());
         homePage.clickOnCard("Alerts, Frame & Windows");
         sideBarPage.clickOnSideBarElement("Browser Windows");
-        Assert.assertEquals(driver.getWindowHandles().size(), 1);
+        Assert.assertEquals(driver.getWindowHandles().size(), 1);   //ocekujem jedan otvorern tab
 
     }
     @Test
     public void userCanOpenNewTab(){
         alertsFrameAndWindowsPage.clickOnNewTabButton();
-        alertsFrameAndWindowsPage.assertThatTheNewTabIsOpen();
-        alertsFrameAndWindowsPage.verifyNewPageLoadInNewTab();
+        alertsFrameAndWindowsPage.assertThatTheNewTabIsOpen();  //uporedjujem  prethodni i ocekivani novi url
+        Assert.assertTrue(alertsFrameAndWindowsPage.semplePageHeading.isDisplayed());   //proveravam da li je ucitana nova stranica sa Sample naslovom
     }
     @Test
     public void  userCanCloseNewTab(){
         alertsFrameAndWindowsPage.clickOnNewTabButton();
         alertsFrameAndWindowsPage.assertThatTheNewTabIsOpen();
-        alertsFrameAndWindowsPage.verifyNewPageLoadInNewTab();
+        Assert.assertTrue(alertsFrameAndWindowsPage.semplePageHeading.isDisplayed());
         alertsFrameAndWindowsPage.closeNewTab();
-        alertsFrameAndWindowsPage.verifyNewTabClose();
+        alertsFrameAndWindowsPage.verifyNewTabClose();  //proveravam ocekivani broj tabova(1) i stvaran broj tabova
         alertsFrameAndWindowsPage.verifyUserIsOnPreviousTabAndPage();
     }
     @Test
     public void userCanOpenNewWindow(){
         sideBarPage.scrollDown();
         alertsFrameAndWindowsPage.clickOnTheNewWindowButton();
-        alertsFrameAndWindowsPage.assertThatNewWindowOpen();
+        alertsFrameAndWindowsPage.assertThatNewWindowOpen();    //uporedjujem stvarni i ocekivani url
     }
 
     @Test

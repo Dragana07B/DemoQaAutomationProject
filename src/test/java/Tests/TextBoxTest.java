@@ -15,10 +15,6 @@ import java.time.Duration;
 public class TextBoxTest extends BaseTest {
     @BeforeMethod
     public void pageSetUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -59,5 +55,8 @@ public class TextBoxTest extends BaseTest {
         elementsPage.clickOnSubmitButton();
         Assert.assertTrue(elementsPage.outputField.getText().isEmpty());
         elementsPage.assertThatEmailFieldBorderColorIsRed();
+        // u asertaciji prvo uzimam bassic boju ivice polja
+        // nakon unosa pogresnog eMaila, uzimam novu boju nakon promene
+        // onda ih poredim da nisu jednake preko assertFalse
     }
 }

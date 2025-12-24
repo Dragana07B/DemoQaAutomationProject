@@ -36,7 +36,7 @@ public class WidgetsPage extends BaseTest {
     @FindBy(css = "input.range-slider")
     WebElement rangeSlider;
     @FindBy(id = "sliderValue")
-    WebElement sliderValue;
+    public WebElement sliderValue;
 
 
     //  Accordian
@@ -47,9 +47,9 @@ public class WidgetsPage extends BaseTest {
     @FindBy(id = "section3Content")
     public WebElement cardBody3;
     @FindBy(className = "card-header")
-    List<WebElement> listPannelsHeader;
+    public List<WebElement> listPannelsHeader;
     @FindBy(className = "card-body")
-    List<WebElement> listPannelBodies;
+    public List<WebElement> listPannelBodies;
 
 
 
@@ -97,40 +97,12 @@ public class WidgetsPage extends BaseTest {
             rangeSlider.sendKeys(Keys.ARROW_LEFT);
         }
     }
-    public void assertBasicValue(){
-        Assert.assertEquals(sliderValue.getAttribute("value"),"25");
-    }
-    public void assertNewValueOfRangeSliderIsDisplayed(){
-        Assert.assertTrue(sliderValue.isDisplayed());
-    }
-    public void assertDisplayedValueIsCorrect(String expValue){
-        Assert.assertEquals(sliderValue.getAttribute("value"),expValue);
-    }
 
 
     //  Accordian
 
-    public void verifyThatFirstAccordianPannelIsExpand(){
-        Assert.assertTrue(listPannelBodies.getFirst().isDisplayed());
-    }
-    public void verifyThatSecondAccordianPannelIsExpand(){
-        Assert.assertTrue(listPannelBodies.get(1).isDisplayed());
-    }
-    public void verifyThatThirdAccordianPannelIsExpand(){
-        Assert.assertTrue(listPannelBodies.get(2).isDisplayed());
-    }
-    public void verifyThatOtherAccordianPannels2And3AreCollapsed(){
-        Assert.assertFalse(cardBody2.isDisplayed());
-        Assert.assertFalse(cardBody3.isDisplayed());
-    }
-    public void verifyThatOtherAccordianPannels1And3AreCollapsed() {
-        Assert.assertFalse(cardBody1.isDisplayed());
-        Assert.assertFalse(cardBody3.isDisplayed());
-    }
-    public void verifyThatOtherAccordianPannels1And2AreCollapsed() {
-        Assert.assertFalse(cardBody1.isDisplayed());
-        Assert.assertFalse(cardBody2.isDisplayed());
-    }
+
+
     public void verifyThatAllAccordianPannelsAreClosed(){
         for(WebElement pannel: listPannelBodies){
             Assert.assertFalse(pannel.isDisplayed());

@@ -15,10 +15,6 @@ import java.time.Duration;
 public class RadioButtonTest extends BaseTest {
     @BeforeMethod
     public void pageSetUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -32,21 +28,23 @@ public class RadioButtonTest extends BaseTest {
 
     @Test
     public void userCanSelectYesRadioButton(){
-        elementsPage.assertThatYesRadioButtonIsEnabled();
+        Assert.assertTrue(elementsPage.yesRadioButton.isEnabled());
         elementsPage.clickOnYesRadioButton();
-        elementsPage.assertThatYesButtonIsSelected();
+        Assert.assertTrue(elementsPage.selectionText.getText().contains("Yes"));
+        Assert.assertTrue(elementsPage.yesRadioButton.isEnabled());
     }
 
     @Test
     public void userCanSelectImpressiveRadioButton(){
-        elementsPage.assertThatImpressiveRadioButtonIsEnabled();
+        Assert.assertTrue(elementsPage.impressiveRadioButton.isEnabled());
         elementsPage.clickOnImpressiveRadioButton();
-        elementsPage.assertThatImpressiveButtonIsSelected();
+        Assert.assertTrue(elementsPage.selectionText.getText().contains("Impressive"));
     }
     @Test
     public void userCanNotSelectNoRadioButton(){
         Assert.assertFalse(elementsPage.noRadioButton.isEnabled());
-        elementsPage.verifyThatCursorIsNotAllowedOverNoButton();
+        Assert.assertEquals(elementsPage.noRadioButton.getCssValue("cursor"), "not-allowed");
+        // CssValue cursor je Css property koji govori browseru kako kursor misa teba da izgleda na nekom polju
     }
 
 

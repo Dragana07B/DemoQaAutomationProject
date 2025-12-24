@@ -49,9 +49,9 @@ public class FormsPage extends BaseTest {
     @FindBy(id = "submit")
     WebElement submitButton;
     @FindBy(className = "modal-content")
-    WebElement modalWindow;
+    public WebElement modalWindow;
     @FindBy(css = ".modal-title.h4")
-    WebElement modalTitle;
+    public WebElement modalTitle;
 
 
 
@@ -144,13 +144,7 @@ public class FormsPage extends BaseTest {
     public void clickOnSubmitButton(){
         submitButton.click();
     }
-    public void assertThatModalWindowIsOpen(){
-        Assert.assertTrue(modalWindow.isDisplayed());
-    }
-    public void assertThatModalWindowTitleConfirmSubmitedForm(){
-        Assert.assertTrue(modalTitle.isDisplayed());
-        Assert.assertTrue(modalTitle.getText().equals("Thanks for submitting the form"));
-    }
+
 
 
 

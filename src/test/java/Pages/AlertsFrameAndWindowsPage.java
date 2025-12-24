@@ -20,7 +20,6 @@ public class AlertsFrameAndWindowsPage extends BaseTest {
     }
 
     // Browser windows
-
     @FindBy(id = "tabButton")
     WebElement tabButton;
     @FindBy(css = "h1[id='sampleHeading']")
@@ -29,8 +28,7 @@ public class AlertsFrameAndWindowsPage extends BaseTest {
     public WebElement newWindowButton;
     @FindBy(id = "messageWindowButton")
     WebElement newWindowMessageButton;
-    @FindBy(xpath = "/html/body/text()")
-    WebElement messageWindow;
+
 
     //  Modal dialog
     @FindBy(id = "showSmallModal")
@@ -63,9 +61,7 @@ public class AlertsFrameAndWindowsPage extends BaseTest {
         String newTabUrl = "https://demoqa.com/sample";
         Assert.assertEquals(driver.getCurrentUrl(),newTabUrl);
     }
-    public void verifyNewPageLoadInNewTab(){
-        Assert.assertTrue(semplePageHeading.isDisplayed());
-    }
+
     public void clickOnTheNewWindowButton(){
         newWindowButton.click();
     }
@@ -77,14 +73,7 @@ public class AlertsFrameAndWindowsPage extends BaseTest {
     public void clickOnNewWindowMessageButton(){
         newWindowMessageButton.click();
     }
-    public void assertThatNewWindowMessageOpen(){
-        try {
-            getTab(1);
-            System.out.println("User is on new message tab");
-        } catch (Exception e){
-            System.out.println("New tab message is not open");
-        }
-    }
+
     public void closeNewTab(){
         driver.close();
     }
@@ -110,9 +99,7 @@ public class AlertsFrameAndWindowsPage extends BaseTest {
     public void clickOnLargeModalButton(){
         largeModalButton.click();
     }
-    public void assertThatLargeModalIsOpen(){
-        Assert.assertTrue(largeModalTitle.isDisplayed());
-    }
+
     public void clickOnLargeModalCloseButton(){
         largeModalCloseButton.click();
     }

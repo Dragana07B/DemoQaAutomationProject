@@ -5,6 +5,7 @@ import Pages.FormsPage;
 import Pages.HomePage;
 import Pages.SideBarPage;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -12,9 +13,6 @@ public class PracticeFormTest extends BaseTest {
 
     @BeforeMethod
     public void pageSetUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -46,8 +44,9 @@ public class PracticeFormTest extends BaseTest {
         formsPage.selectStateCustomDropdown("Raj");
         formsPage.selectCityCustomDropdown("Jais");
         formsPage.clickOnSubmitButton();
-        formsPage.assertThatModalWindowIsOpen();
-        formsPage.assertThatModalWindowTitleConfirmSubmitedForm();
+        Assert.assertTrue(formsPage.modalWindow.isDisplayed());
+        Assert.assertTrue(formsPage.modalTitle.isDisplayed());
+        Assert.assertTrue(formsPage.modalTitle.getText().equals("Thanks for submitting the form"));
 
 
     }

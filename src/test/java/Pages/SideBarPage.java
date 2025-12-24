@@ -27,17 +27,17 @@ public class SideBarPage extends BaseTest {
 
 
     public void scrollDown(){
-        for(int i =0; i<sideBarCardsList.size(); i++){
-            if(sideBarCardsList.get(i).getText().equals("Book Store Application")){
-                scrollToElement(sideBarCardsList.get(i));
+        for(int i =0; i<sideBarCardsList.size(); i++){                                  // ovom metodom mogu da skorlujem
+            if(sideBarCardsList.get(i).getText().equals("Book Store Application")){     // svaku stranicu. Ne moram da ponavljam
+                scrollToElement(sideBarCardsList.get(i));                               // kod u svakoj page klasi
             }
         }
 
     }
 
-    public void clickOnSideBarElement(String nameButton){
-        for(WebElement element:sideBarButtonsList){
-            if(element.getText().equals(nameButton)){
+    public void clickOnSideBarElement(String nameButton){      // ovom metodom biram sekcije, odnosno funkcionalnosti iz side bara
+        for(WebElement element:sideBarButtonsList){            // ne moram da ponavljam kod u svakoj klasi pre pocetka
+            if(element.getText().equals(nameButton)){          // pisanja metoda i rada na funkcionalonsti
                 element.click();
             }
         }

@@ -13,9 +13,6 @@ public class SelectableTest extends BaseTest {
 
     @BeforeMethod
     public void PageSetUp(){
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demoqa.com/");
 
         homePage = new HomePage();
         sideBarPage = new SideBarPage();
@@ -33,6 +30,10 @@ public class SelectableTest extends BaseTest {
         interactionsPage.clickOnGridButton("Two");
         interactionsPage.verifyThatGridButtonIsSelected("Two");
     }
+    // u metodi verifyThatAllGridButtonsAreSelected prolazim kroz listu dugmica i trazim odredjeno koje ima text
+    // jednak onome koji sam ja prosledila. Onda uzimam atribut class i stavljam ga u string Selection
+    // u asertaciji proveravam da je se u tom stringu nalazi rec active. Active ce se pojaviti onda kada je dugme
+    // selektovano, a kad nije, rec active nije u stringu.
 
     @Test
     public void userCanSelectAllGridElements() throws InterruptedException {
@@ -40,6 +41,9 @@ public class SelectableTest extends BaseTest {
         interactionsPage.clickOnAllGridButtons();
         interactionsPage.verifyThatAllGridButtonsAreSelected();
     }
+    // u metodi userCanSelectAllGridElements prolazim kroz listu dugmica i provaravam da li se u atributu class svakog
+    // dugmica nalazi string koji sadrzi rec active.
+
     @Test
     public void userCanDeselectAllGridButtons() throws InterruptedException {
         sideBarPage.scrollDown();
@@ -48,6 +52,8 @@ public class SelectableTest extends BaseTest {
         interactionsPage.clickOnAllGridButtons();
         interactionsPage.verifyThatAllGridButtonsAreNotSelected();
     }
+    // u ovoj metodi kad deselektujem sve dugmice, proveravam da li u stringu atributa class svakog dusmica
+    // nema reci active. Ako je nema, znaci da dgume nije selektovano
 
 
 
